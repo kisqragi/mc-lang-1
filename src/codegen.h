@@ -40,7 +40,11 @@ Value *BinaryAST::codegen() {
     return Builder.CreateAdd(L, R, "addtmp");
   // TODO 1.7: '-'と'*'に対してIRを作ってみよう
   // 上の行とhttps://llvm.org/doxygen/classllvm_1_1IRBuilder.htmlを参考のこと
-  // case '-': ...
+  case '-':
+    return Builder.CreateSub(L, R, "addtmp");
+
+  case '*':
+    return Builder.CreateMul(L, R, "addtmp");
 
   default:
     return LogErrorV("invalid binary operator");

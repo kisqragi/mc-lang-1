@@ -27,19 +27,29 @@ class Lexer {
             // TODO 1.3: 数字のパーシングを実装してみよう
             // 今読んでいる文字(lastChar)が数字だった場合(isdigit(lastChar) == true)は、
             // 数字が終わるまで読み、その数値をnumValにセットする。
-            // 1. lastCharが数字かチェックする e.g. if (isdigit(lastChar)) {..
+            // 1. lastCharが数字かチェックする e.g. if (isdigit(lastChar)) {..}
             // 2. 数字を格納するための変数を作る e.g. std::string str = "";
             // 3. 入力が'456'という数字だったとして、今の文字は'4'なので、
             //    次の文字が数字ではなくなるまで読み込み、2で作った変数に格納する
             //    e.g. str += lastChar;
             // 4. 次の文字が数字でなくなるまで読み込む。ファイルから次の文字を読み込むのは、
-            //    getNextChar(iFile)で出来る。 e.g. while(isdigit(lastChar = getNextChar(iFile))) {..
+            //    getNextChar(iFile)で出来る。 e.g. while(isdigit(lastChar = getNextChar(iFile))) {..}
             // 5. 2と同様に、4が数字であれば2で作った変数に格納する
             // 6. 次の文字が数字でなくなったら、setnumValを読んでnumValに数値を格納する。その際、
             //   strtodというcharからintにする関数が利用できる。
             // 7. このトークンは数値だったので、tok_numberをreturnする。
             //
             // ここに実装して下さい
+            if (isdigit(lastChar)) {
+                std::string str = "";
+                str += lastChar; 
+                while (isdigit(lastChar = getNextChar(iFile))) {
+                    str += lastChar; 
+                }
+                const char* cstr = str.c_str();
+                setnumVal(strtod(cstr, nullptr));
+                return tok_number;
+            }
 
             // TODO 1.4: コメントアウトを実装してみよう
             // '#'を読んだら、その行の末尾まで無視をするコメントアウトを実装する。
@@ -49,6 +59,14 @@ class Lexer {
             // 4. lastCharがEOFでない場合、行末まで読み込んだので次のトークンに進むためにgettok()をreturnする。
             //
             // ここに実装して下さい
+            if (lastChar == '#') {
+                do {
+                    lastChar = getNextChar(iFile);
+                } while(lastChar != EOF && lastChar != '\n');
+                if (lastChar != EOF) {
+                    return gettok();
+                }
+            }
 
             // EOFならtok_eofを返す
             if (iFile.eof())
