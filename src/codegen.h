@@ -46,6 +46,9 @@ Value *BinaryAST::codegen() {
   case '*':
     return Builder.CreateMul(L, R, "addtmp");
 
+  case '/':
+    return Builder.CreateUDiv(L, R, "addtmp");
+
   default:
     return LogErrorV("invalid binary operator");
   }
