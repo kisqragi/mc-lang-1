@@ -25,6 +25,10 @@ git clone https://github.com/yamaguchi1024/mc-lang-1.git
 ```
 sudo ln -s /usr/bin/llvm-config-8 /usr/bin/llvm-config
 ```
+clang++のバージョンも揃える
+```
+sudo ln -s /usr/bin/clang++-8 /usr/bin/clang++
+```
 ```
 make
 ```
